@@ -276,13 +276,24 @@ print(f"{cv_df.shape[0]} ClinVar variants after removal of 'VUS'.")
 cv_df = cv_df[cv_df["SimpleClassRIN"] != "Disorder"]
 print(f"{cv_df.shape[0]} ClinVar variants after removal of 'Disorder' str class.")
 
+## uncomment for CPDs in 26 primates
+# # filter out unmapped variants
+# cv_df = cv_df[cv_df["NumAA2in26Prim"] != '?']
+# cv_df["NumAA2in26Prim"] = pd.to_numeric(cv_df["NumAA2in26Prim"])
+# print(f"{cv_df.shape[0]} variants after removal of '?' in 'AA2in26Prim'.")
+
+# # add an indicator column for CPD
+# cv_df["CPD"] = cv_df["NumAA2in26Prim"] > 0
+
+## uncomment for CPDs in 117 primates
 # filter out unmapped variants
-cv_df = cv_df[cv_df["NumAA2in26Prim"] != '?']
-cv_df["NumAA2in26Prim"] = pd.to_numeric(cv_df["NumAA2in26Prim"])
-print(f"{cv_df.shape[0]} variants after removal of '?' in 'AA2in26Prim'.")
+cv_df = cv_df[cv_df["NumAA2in117"] != '?']
+cv_df["NumAA2in117"] = pd.to_numeric(cv_df["NumAA2in117"])
+print(f"{cv_df.shape[0]} variants after removal of '?' in 'NumAA2in117'.")
 
 # add an indicator column for CPD
-cv_df["CPD"] = cv_df["NumAA2in26Prim"] > 0
+cv_df["CPD"] = cv_df["NumAA2in117"] > 0
+
 cv_df["CPD"] = cv_df["CPD"].map({True: 'CPD', False: 'non-CPD'})
 
 # map sctructure classes to groups
@@ -413,7 +424,8 @@ FEATURES = {
 
 # Path-CPD vs Path-nonCPD
 cv_df_sel = cv_df[cv_df["CV.SigShort"] == "Pathogenic"]
-out_path = "../pics/CV_CPD/PCPD_PnCPD/"
+# out_path = "../plots/CV_CPD_26/PCPD_PnCPD/"
+out_path = "../../CPD_DiplomaProject/plots/CV_CPD_117/PCPD_PnCPD"
 plt_name = "Path-CPD_Path-nonCPD"
 split = "CPD"
 
@@ -421,7 +433,8 @@ plot_graphs(cv_df_sel, out_path, plt_name, split)
 
 # Path-CPD vs Benign-CPD
 cv_df_sel = cv_df[cv_df["CPD"] == "CPD"]
-out_path = "../pics/CV_CPD/PCPD_BCPD/"
+# out_path = "../plots/CV_CPD_26/PCPD_BCPD/"
+out_path = "../../CPD_DiplomaProject/plots/CV_CPD_117/PCPD_BCPD"
 plt_name = "Ben-CPD_Path-CPD"
 split = "clinvar"
 
@@ -430,7 +443,8 @@ plot_graphs(cv_df_sel, out_path, plt_name, split)
 # Path-CPD vs Benign-non-CPD
 cv_df_sel = cv_df[((cv_df["CPD"] == "CPD") & (cv_df["CV.SigShort"] == "Pathogenic")) | 
                   ((cv_df["CPD"] == "non-CPD") & (cv_df["CV.SigShort"] == "Benign"))]
-out_path = "../pics/CV_CPD/PCPD_BnCPD/"
+# out_path = "../plots/CV_CPD_26/PCPD_BnCPD/"
+out_path = "../../CPD_DiplomaProject/plots/CV_CPD_117/PCPD_BnCPD"
 plt_name = "Path-CPD_Ben-nonCPD"
 split = "cpd"
 
@@ -439,7 +453,8 @@ plot_graphs(cv_df_sel, out_path, plt_name, split)
 # Path-CPD vs Benign(all)
 cv_df_sel = cv_df[((cv_df["CPD"] == "CPD") & (cv_df["CV.SigShort"] == "Pathogenic")) | 
                   (cv_df["CV.SigShort"] == "Benign")]
-out_path = "../pics/CV_CPD/PCPD_B/"
+# out_path = "../plots/CV_CPD_26/PCPD_B/"
+out_path = "../../CPD_DiplomaProject/plots/CV_CPD_117/PCPD_B"
 plt_name = "Ben(all)_Path-CPD"
 split = "clinvar"
 
@@ -447,7 +462,8 @@ plot_graphs(cv_df_sel, out_path, plt_name, split)
 
 # Benign-CPD vs Benign-non-CPD
 cv_df_sel = cv_df[cv_df["CV.SigShort"] == "Benign"]
-out_path = "../pics/CV_CPD/BCPD_BnCPD/"
+# out_path = "../plots/CV_CPD_26/BCPD_BnCPD/"
+out_path = "../../CPD_DiplomaProject/plots/CV_CPD_117/BCPD_BnCPD"
 plt_name = "Ben-CPD_Ben-nonCPD"
 split = "cpd"
 

@@ -333,13 +333,24 @@ print(f"{cv_df.shape[0]} ClinVar variants after removal of 'VUS'.")
 cv_df = cv_df[cv_df["SimpleClassRIN"] != "Disorder"]
 print(f"{cv_df.shape[0]} ClinVar variants after removal of 'Disorder' str class.")
 
+## uncomment for CPDs in 26 primates
+# # filter out unmapped variants
+# cv_df = cv_df[cv_df["NumAA2in26Prim"] != '?']
+# cv_df["NumAA2in26Prim"] = pd.to_numeric(cv_df["NumAA2in26Prim"])
+# print(f"{cv_df.shape[0]} variants after removal of '?' in 'AA2in26Prim'.")
+
+# # add an indicator column for CPD
+# cv_df["CPD"] = cv_df["NumAA2in26Prim"] > 0
+
+## uncomment for CPDs in 117 primates
 # filter out unmapped variants
-cv_df = cv_df[cv_df["NumAA2in26Prim"] != '?']
-cv_df["NumAA2in26Prim"] = pd.to_numeric(cv_df["NumAA2in26Prim"])
-print(f"{cv_df.shape[0]} variants after removal of '?' in 'AA2in26Prim'.")
+cv_df = cv_df[cv_df["NumAA2in117"] != '?']
+cv_df["NumAA2in117"] = pd.to_numeric(cv_df["NumAA2in117"])
+print(f"{cv_df.shape[0]} variants after removal of '?' in 'NumAA2in117'.")
 
 # add an indicator column for CPD
-cv_df["CPD"] = cv_df["NumAA2in26Prim"] > 0
+cv_df["CPD"] = cv_df["NumAA2in117"] > 0
+
 cv_df["CPD"] = cv_df["CPD"].map({True: 'CPD', False: 'non-CPD'})
 
 # map sctructure classes to groups

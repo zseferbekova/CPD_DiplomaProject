@@ -107,3 +107,5 @@ $ mean_hydrophob.py hydrophobicity.tsv kD g Ala Cys N
 Ноутбук для расчёта корреляции и построения тепловой
 карты корреляций.
 
+#### machine_learning.ipynb
+Ноутбук для обучения моделей (случайные леса, мета-модели).
